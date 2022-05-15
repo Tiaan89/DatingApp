@@ -16,6 +16,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Cors;
 using API.Interfaces;
 using API.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace API
 {
@@ -43,7 +46,6 @@ namespace API
 
             services.AddControllers();
 
-
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(policy => policy
@@ -51,6 +53,18 @@ namespace API
                     .AllowAnyMethod()
                     .WithOrigins("https://localhost:4200")); //restart required!
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options => 
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"])),
+                        ValidateIssuer = false, //API server
+                        ValidateAudience = false //Angular Application
+                    };
+                });
 
             services.AddSwaggerGen(c =>
             {
@@ -73,6 +87,8 @@ namespace API
             app.UseRouting();
 
             app.UseCors();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
