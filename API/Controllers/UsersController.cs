@@ -12,15 +12,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    // [ApiController]
+    // [ApiController] **from BaseApiController
     // [Route("api/[controller]")]
     public class UsersController : BaseApiController
     {
-        private readonly DataContext _context;
-        public UsersController(DataContext context) //constructor getting the data from the database
-        {
-            _context = context;
-        }
+
+       private readonly DataContext _context;
+       public UsersController(DataContext context)
+       {
+           _context = context;
+       }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() //IEnumerable almost like a list
