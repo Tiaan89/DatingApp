@@ -34,9 +34,10 @@ namespace API.Controllers
         //api/users/3
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id) //IEnumerable almost like a list
+        public async Task<ActionResult<AppUser>> GetUser(int id)
         {
             return await _context.Users.FindAsync(id);
         }
+        
     }
 }
