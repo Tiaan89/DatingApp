@@ -15,29 +15,31 @@ namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
+
         private readonly DataContext _context;
         private readonly ITokenService _tokenService;
-        public AccountController(DataContext context, ITokenService tokenService) //constructor
+
+        public AccountController(DataContext context, ITokenService tokenService)
         {
-            _tokenService = tokenService;
-            _context = context;
+            context = _context;
+            tokenService = _tokenService;
         }
 
         [HttpPost("register")]
         public async Task<ActionResult<UserDto>> Register(RegisterDto registerDto)
         {
-            if(await UserExists(registerDto.Username)) return BadRequest("Username already exists!");
+            if(await UserExists(registerDto.Username)) return BadRequest("The username already exists.");
 
             using var hmac = new HMACSHA512(); //'using' to ensure dispose
 
             var user = new AppUser
-            { //Properties
+            {
                 UserName = registerDto.Username.ToLower(),
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
                 PasswordSalt = hmac.Key
             };
 
-            _context.Users.Add(user); //database.table.method(object)
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
             return new UserDto
