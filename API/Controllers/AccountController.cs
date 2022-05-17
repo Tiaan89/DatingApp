@@ -21,8 +21,8 @@ namespace API.Controllers
 
         public AccountController(DataContext context, ITokenService tokenService)
         {
-            context = _context;
-            tokenService = _tokenService;
+            _context = context;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
