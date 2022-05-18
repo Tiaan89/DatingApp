@@ -1,5 +1,5 @@
 
-<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-primary">
   <div class="container">
     <a class="navbar-brand"  routerLink='/' routerLinkActive="acitve">Dating App</a>
 
@@ -19,15 +19,14 @@
          </ng-containter>
       </ul>
 
-      <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
-        <a class="dropdown-toggle text-light" dropdownToggle>Welcome user</a>
+      <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
+        <a class="dropdown-toggle text-light" dropdownToggle>Welcome {{ user.userName | titlecase}}</a>
         <div class="dropdown-menu" *dropdownMenu>
           <a class="dropdown-item">Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">Logout</a>
         </div>
       </div>
-
 
       <form *ngIf="(accountService.currentUser$ | async) === null"
             #loginForm="ngForm"
@@ -46,7 +45,7 @@
           Class="form-control mr-sm-2"
           type="password"
           placeholder="Password">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+        <button class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
       </form>
   </div>
 </nav>
