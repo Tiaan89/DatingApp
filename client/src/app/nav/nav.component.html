@@ -3,16 +3,20 @@
   <div class="container">
     <a class="navbar-brand"  routerLink='/' routerLinkActive="acitve">Dating App</a>
 
-       <ul class="navbar-nav mr-auto"> <!-- *ngIf="accountService.currentUser$ | async" -->
-        <li class="nav-item">
-           <a class="nav-link" routerLink='/members' routerLinkActive="acitve">Matches <!--<span class="sr-only">(current)</span>--></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink='/lists' routerLinkActive="acitve">Lists</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink='/messages' routerLinkActive="acitve">Messages</a>
-        </li>
+       <ul class="navbar-nav mr-auto" >
+         <ng-containter *ngIf="accountService.currentUser$ | async">
+            <li class="nav-item">
+              <a class="nav-link" routerLink='/members' routerLinkActive="acitve">Matches
+                <!--<span class="sr-only">(current)</span>-->
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink='/lists' routerLinkActive="acitve">Lists</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink='/messages' routerLinkActive="acitve">Messages</a>
+            </li>
+         </ng-containter>
       </ul>
 
       <div class="dropdown" *ngIf="accountService.currentUser$ | async" dropdown>
