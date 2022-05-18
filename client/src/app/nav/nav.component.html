@@ -3,7 +3,7 @@
   <div class="container">
     <a class="navbar-brand"  routerLink='/' routerLinkActive="acitve">Dating App</a>
 
-      <ul class="navbar-nav mr-auto" *ngIf="accountService.currentUser$ | async">
+       <ul class="navbar-nav mr-auto"> <!-- *ngIf="accountService.currentUser$ | async" -->
         <li class="nav-item">
            <a class="nav-link" routerLink='/members' routerLinkActive="acitve">Matches <!--<span class="sr-only">(current)</span>--></a>
         </li>
