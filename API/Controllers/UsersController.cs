@@ -15,6 +15,7 @@ namespace API.Controllers
 {
     // [ApiController] **from BaseApiController
     // [Route("api/[controller]")]
+    [Authorize]
     public class UsersController : BaseApiController
     {
 
@@ -25,14 +26,12 @@ namespace API.Controllers
        }
 
         [HttpGet]
-        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() //IEnumerable almost like a list
         {
             return await _context.Users.ToListAsync();
         }
 
         //api/users/3
-        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<AppUser>> GetUser(int id)
         {
