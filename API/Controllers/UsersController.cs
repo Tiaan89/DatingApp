@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using API.Interfaces;
 
 namespace API.Controllers
 {
@@ -18,24 +19,25 @@ namespace API.Controllers
     [Authorize]
     public class UsersController : BaseApiController
     {
+        private readonly IUserRepository _userRepository; //Field
 
        private readonly DataContext _context;
-       public UsersController(DataContext context)
+       public UsersController(IUserRepository userRepository)
        {
-           _context = context;
+            _userRepository = userRepository;
        }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers() //IEnumerable almost like a list
         {
-            return await _context.Users.ToListAsync();
+            return Ok(await _userRepository.GetUsersAsync()); //Wrap in Ok response
         }
 
         //api/users/3
-        [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetUser(int id)
+        [HttpGet("{username}")] //will give you a 204 No Content Error!
+        public async Task<ActionResult<AppUser>> GetUser(string username)
         {
-            return await _context.Users.FindAsync(id);
+            return await _userRepository.GetUserByUsernameAsync(username);
         }
         
     }
